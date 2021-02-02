@@ -300,6 +300,7 @@ if (params.single_end || params.megahit_only) {
 scaffolds_spades_ch
     .mix(scaffolds_megahit_ch)
     .map { row -> row[1] }
+    .collect()
     .set { scaffolds_stats_ch }
 
 /*
