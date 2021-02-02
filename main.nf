@@ -226,19 +226,19 @@ if (!params.single_end && !params.megahit_only) {
     process spades {
         tag "${id}"
     
-        publishDir "${params.outdir}" , mode: 'copy'   
+        publishDir "${params.outdir}/spades" , mode: 'copy'   
 
         publishDir "${params.outdir}" , mode: 'copy' ,
             saveAs: { filename ->
-                if (filename == "spades/scaffolds.fasta") "scaffolds/${id}.scaffolds.fa"
+                if (filename == "${id}/scaffolds.fasta") "scaffolds/${id}.scaffolds.fa"
             }
     
         input:
         tuple val(id), path(reads) from clean_reads_spades_ch
     
         output:
-        tuple val(id), path("spades/scaffolds.fasta") into scaffolds_spades_ch
-        path "spades/*"
+        tuple val(id), path("${id}/scaffolds.fasta") into scaffolds_spades_ch
+        path "${id}/*"
     
         script:
         task_memory_GB = task.memory.toGiga()
@@ -251,7 +251,7 @@ if (!params.single_end && !params.megahit_only) {
             ${param_spades_k} \
             --threads ${task.cpus} \
             --memory ${task_memory_GB} \
-            -o spades
+            -o ${id}
         """
     }
 } else {
@@ -265,19 +265,19 @@ if (params.single_end || params.megahit_only) {
     process megahit {
         tag "${id}"
 
-        publishDir "${params.outdir}" , mode: 'copy'
+        publishDir "${params.outdir}/megahit" , mode: 'copy'
 
         publishDir "${params.outdir}" , mode: 'copy' ,
             saveAs: { filename -> 
-                if (filename == "megahit/final.contigs.fa") "scaffolds/${id}.scaffolds.fa"
+                if (filename == "${id}/final.contigs.fa") "scaffolds/${id}.scaffolds.fa"
             }
 
         input:
         tuple val(id), path(reads) from clean_reads_megahit_ch
 
         output:
-        tuple val(id), path("megahit/final.contigs.fa") into scaffolds_megahit_ch
-        path "megahit/*"
+        tuple val(id), path("${id}/final.contigs.fa") into scaffolds_megahit_ch
+        path "${id}/*"
 
         script:
         task_memory_GB = task.memory.toGiga()
@@ -290,7 +290,7 @@ if (params.single_end || params.megahit_only) {
             ${param_megahit_k} \
             --min-count 3 \
             --memory $task_memory_GB \
-            -o megahit
+            -o ${id}
         """
     }
 } else {
@@ -299,7 +299,14 @@ if (params.single_end || params.megahit_only) {
 
 scaffolds_spades_ch
     .mix(scaffolds_megahit_ch)
+    .map { row -> row[1] }
     .set { scaffolds_stats_ch }
+
+genomes_only_ch = genomes_ch
+        .map { row -> row[1] }
+
+    busco(genomes_ch, lineage, busco_db)
+    statswrapper(genomes_only_ch.collect())
 
 /*
  * Step 5. Scaffold statistics
@@ -310,7 +317,7 @@ process statswrapper {
         publishDir "${params.outdir}" , mode: 'copy'
 
         input:
-        tuple val(id), path(scaffolds) from scaffolds_stats_ch
+        path scaffolds from scaffolds_stats_ch
 
         output:
         path 'stats.tsv'
