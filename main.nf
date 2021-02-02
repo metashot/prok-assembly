@@ -299,7 +299,7 @@ if (params.single_end || params.megahit_only) {
 
 scaffolds_spades_ch
     .mix(scaffolds_megahit_ch)
-    .into { scaffolds_stats_ch }
+    .set { scaffolds_stats_ch }
 
 /*
  * Step 5. Scaffold statistics
