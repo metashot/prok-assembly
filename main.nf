@@ -302,12 +302,6 @@ scaffolds_spades_ch
     .map { row -> row[1] }
     .set { scaffolds_stats_ch }
 
-genomes_only_ch = genomes_ch
-        .map { row -> row[1] }
-
-    busco(genomes_ch, lineage, busco_db)
-    statswrapper(genomes_only_ch.collect())
-
 /*
  * Step 5. Scaffold statistics
  */
