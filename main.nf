@@ -227,16 +227,16 @@ if (!params.single_end && !params.megahit_only) {
         tag "${id}"
     
         publishDir "${params.outdir}/spades" , mode: 'copy' ,
-            pattern: '${id}/*'
+            pattern: "${id}/*"
 
         publishDir "${params.outdir}/scaffolds" , mode: 'copy' ,
-            pattern: '${id}.scaffolds.fa'
+            pattern: "${id}.fa"
 
         input:
         tuple val(id), path(reads) from clean_reads_spades_ch
     
         output:
-        tuple val(id), path("${id}.scaffolds.fa") into scaffolds_spades_ch
+        tuple val(id), path("${id}.fa") into scaffolds_spades_ch
         path "${id}/*"
     
         script:
@@ -251,7 +251,7 @@ if (!params.single_end && !params.megahit_only) {
             --threads ${task.cpus} \
             --memory ${task_memory_GB} \
             -o ${id}
-        cp ${id}/scaffolds.fasta ${id}.scaffolds.fa
+        cp ${id}/scaffolds.fasta ${id}.fa
         """
     }
 } else {
@@ -266,16 +266,16 @@ if (params.single_end || params.megahit_only) {
         tag "${id}"
 
         publishDir "${params.outdir}/megahit" , mode: 'copy' ,
-            pattern: '${id}/*'
+            pattern: "${id}/*"
 
         publishDir "${params.outdir}/scaffolds" , mode: 'copy' ,
-            pattern: '${id}.scaffolds.fa'
+            pattern: "${id}.fa"
 
         input:
         tuple val(id), path(reads) from clean_reads_megahit_ch
 
         output:
-        tuple val(id), path("${id}.scaffolds.fa") into scaffolds_megahit_ch
+        tuple val(id), path("${id}.fa") into scaffolds_megahit_ch
         path "${id}/*"
 
         script:
@@ -290,7 +290,7 @@ if (params.single_end || params.megahit_only) {
             --min-count 3 \
             --memory $task_memory_GB \
             -o ${id}
-        cp ${id}/final.contigs.fa ${id}.scaffolds.fa
+        cp ${id}/final.contigs.fa ${id}.fa
         """
     }
 } else {
@@ -307,7 +307,6 @@ scaffolds_spades_ch
  * Step 5. Scaffold statistics
  */
 process statswrapper {      
-        tag "${id}"
 
         publishDir "${params.outdir}" , mode: 'copy'
 
