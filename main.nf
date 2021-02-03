@@ -226,18 +226,17 @@ if (!params.single_end && !params.megahit_only) {
     process spades {
         tag "${id}"
     
-        publishDir "${params.outdir}/spades" , mode: 'copy'   
+        publishDir "${params.outdir}/spades" , mode: 'copy' ,
+            pattern: '${id}/*'
 
-        publishDir "${params.outdir}" , mode: 'copy' ,
-            saveAs: { filename ->
-                if (filename == "${id}/scaffolds.fasta") "scaffolds/${id}.scaffolds.fa"
-            }
-    
+        publishDir "${params.outdir}/scaffolds" , mode: 'copy' ,
+            pattern: '${id}.scaffolds.fa'
+
         input:
         tuple val(id), path(reads) from clean_reads_spades_ch
     
         output:
-        tuple val(id), path("${id}/scaffolds.fasta") into scaffolds_spades_ch
+        tuple val(id), path("${id}.scaffolds.fa") into scaffolds_spades_ch
         path "${id}/*"
     
         script:
@@ -252,6 +251,7 @@ if (!params.single_end && !params.megahit_only) {
             --threads ${task.cpus} \
             --memory ${task_memory_GB} \
             -o ${id}
+        cp ${id}/scaffolds.fasta ${id}.scaffolds.fa
         """
     }
 } else {
@@ -265,18 +265,17 @@ if (params.single_end || params.megahit_only) {
     process megahit {
         tag "${id}"
 
-        publishDir "${params.outdir}/megahit" , mode: 'copy'
+        publishDir "${params.outdir}/megahit" , mode: 'copy' ,
+            pattern: '${id}/*'
 
-        publishDir "${params.outdir}" , mode: 'copy' ,
-            saveAs: { filename -> 
-                if (filename == "${id}/final.contigs.fa") "scaffolds/${id}.scaffolds.fa"
-            }
+        publishDir "${params.outdir}/scaffolds" , mode: 'copy' ,
+            pattern: '${id}.scaffolds.fa'
 
         input:
         tuple val(id), path(reads) from clean_reads_megahit_ch
 
         output:
-        tuple val(id), path("${id}/final.contigs.fa") into scaffolds_megahit_ch
+        tuple val(id), path("${id}.scaffolds.fa") into scaffolds_megahit_ch
         path "${id}/*"
 
         script:
@@ -291,6 +290,7 @@ if (params.single_end || params.megahit_only) {
             --min-count 3 \
             --memory $task_memory_GB \
             -o ${id}
+        cp ${id}/final.contigs.fa ${id}.scaffolds.fa
         """
     }
 } else {
