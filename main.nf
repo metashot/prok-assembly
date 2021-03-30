@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl=2
 
-include { deinterlive; trim_adapters; remove_contaminants; quality_filter;
+include { deinterleave; trim_adapters; remove_contaminants; quality_filter;
     raw_reads_stats; clean_reads_stats; statswrapper } from './modules/bbtools'
 
 workflow {
@@ -12,8 +12,8 @@ workflow {
         .set { reads_ch }
 
     if (params.interleaved) {
-        deinterlive(reads_ch)
-        deint_ch = deinterlive.out.reads
+        deinterleave(reads_ch)
+        deint_ch = deinterleave.out.reads
     } else {
         deint_ch = reads_ch
     }
