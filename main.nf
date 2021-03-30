@@ -36,7 +36,7 @@ workflow {
         statswrapper(scaffolds_ch.map { row -> row[1] }.collect())
     }
 
-    if (!params.skip_plasmidspades) {
+    if (params.run_plasmidspades) {
         plasmidspades(clean_ch)
 
         if (params.viralverify_db == 'none') {
