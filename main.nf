@@ -23,8 +23,9 @@ workflow {
     if (!params.skip_cleaning) {
         trim_adapters(deint_ch)
         remove_contaminants(trim_adapters.out.reads)
-        clean_ch = quality_filter(remove_contaminants.out.reads)
-        clean_reads_stats(qual_ch)
+        quality_filter(remove_contaminants.out.reads)
+        clean_ch = quality_filter.out.reads
+        clean_reads_stats(clean_ch)
     } else {
         clean_ch = reads_ch
     }

@@ -13,8 +13,8 @@ prokaryotic isolates and other small genomes.
   scores, GC content, average quality and length are generated from input reads
   and clean reads using
   [bbduk](https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/bbduk-guide/);
-- Adapter trimming, contaminant filtering and quality filtering/trimming and
-  length filtering using bbduk;
+- Adapter trimming, contaminant filtering and a conservative quality
+  filtering/trimming and length filtering using bbduk;
 - Optionally, run plasmidSpades and ViralVerify tool;
 
 ## Quick start
