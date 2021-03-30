@@ -31,13 +31,13 @@ workflow {
     }
 
     if (!params.skip_spades) {
-        spades(qual_ch)
+        spades(clean_ch)
         scaffolds_ch = spades.out.scaffolds
         statswrapper(scaffolds_ch.map { row -> row[1] }.collect())
     }
 
     if (!params.skip_plasmidspades) {
-        plasmidspades(qual_ch)
+        plasmidspades(clean_ch)
 
         if (params.viralverify_db == 'none') {
             viralverify_db_download()
