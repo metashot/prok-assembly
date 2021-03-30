@@ -74,7 +74,7 @@ process viralverify_db_download {
     script:
     """
     VIRALVERIFY_DB_URL="https://ndownloader.figshare.com/files/17904323?private_link=f897d463b31a35ad7bf0"
-    curl -L ${VIRALVERIFY_DB_URL} --output nbc_hmms.hmm.gz && \
+    curl -L \${VIRALVERIFY_DB_URL} --output nbc_hmms.hmm.gz && \
         gunzip -c nbc_hmms.hmm.gz > nbc_hmms.hmm
     rm -rf nbc_hmms.hmm.gz
     """
