@@ -2,12 +2,8 @@
 
 nextflow.enable.dsl=2
 
-include { deinterleave; trim_adapters; remove_contaminants; quality_filter;
-    raw_reads_stats; clean_reads_stats; statswrapper }
-    from './modules/bbtools'
-
-include { spades; plasmidspades; viralverify; viralverify_db_download} 
-    from './modules/spades'
+include { deinterleave; trim_adapters; remove_contaminants; quality_filter; raw_reads_stats; clean_reads_stats; statswrapper } from './modules/bbtools'
+include { spades; plasmidspades; viralverify; viralverify_db_download} from './modules/spades'
 
 workflow {
     Channel
