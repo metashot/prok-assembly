@@ -47,6 +47,6 @@ workflow {
             viralverify_db = file(params.viralverify_db, checkIfExists: true)
         }
 
-        viralverify(spades.out.scaffolds)
+        viralverify(plasmidspades.out.scaffolds, viralverify_db)
     }
 }
