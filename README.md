@@ -15,10 +15,7 @@ prokaryotic isolates and other small genomes.
   [bbduk](https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/bbduk-guide/);
 - Adapter trimming, contaminant filtering and quality filtering/trimming and
   length filtering using bbduk;
-- Assembly with [Spades](https://cab.spbu.ru/software/spades/) or
-  [Megahit](https://github.com/voutcn/megahit);
-- Assembly statistics using
-  [bbtools](https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/statistics-guide/);
+- Optionally, run plasmidSpades and ViralVerify tool;
 
 ## Quick start
 
@@ -42,7 +39,7 @@ after the pipeline has finished.
 
 ### Main outputs
 - `scaffolds`: scaffolds for each input samples;
-- `stats.tsv`: scaffold statistics;
+- `stats_scaffolds.tsv`: scaffold statistics;
 
 ### Secondary outputs
 
@@ -52,7 +49,7 @@ after the pipeline has finished.
   control;
 - `qc`: statistics about the adapter trimming and the contaminant filtering;
 - `spades`: Spades output for each input sample;
-- `megahit`: megahit output for each input sample.
+
 
 ## System requirements
 Please refer to [System
