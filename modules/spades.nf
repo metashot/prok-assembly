@@ -69,7 +69,7 @@ process viralverify_db_download {
     publishDir "${params.outdir}/dbs" , mode: 'copy'
 
     output:
-    path 'viralverify_db', emit: viralverify_db
+    path 'nbc_hmms.hmm', emit: viralverify_db
 
     script:
     """
