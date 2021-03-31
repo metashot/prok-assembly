@@ -98,7 +98,7 @@ process quality_filter {
     tuple val(id), path(reads)
 
     output:
-    tuple val(id), path("${id}.fastq.gz"), emit: reads
+    tuple val(id), path("${id}*.fastq.gz"), emit: reads
 
     script:
     task_memory_GB = task.memory.toGiga()
