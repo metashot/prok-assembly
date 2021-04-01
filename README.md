@@ -15,7 +15,8 @@ prokaryotic isolates and other small genomes.
   [bbduk](https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/bbduk-guide/);
 - Adapter trimming, contaminant filtering and a conservative quality
   filtering/trimming and length filtering using bbduk;
-- Optionally, run plasmidSpades and ViralVerify tool;
+- Optionally, assemble plasmids with plasmidSpades and verify them using
+  ViralVerify.
 
 ## Quick start
 

@@ -100,7 +100,7 @@ process viralverify {
     script:
     """
     viralverify.py \
-        -r ${scaffolds} \
+        -f ${scaffolds} \
         -o ${id} \
         --hmm ${viralverify_db} \
         -p ${id}.fa \
