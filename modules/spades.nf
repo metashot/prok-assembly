@@ -103,7 +103,7 @@ process viralverify {
         -f ${scaffolds} \
         -o ${id} \
         --hmm ${viralverify_db} \
-        -p ${id}.fa \
+        -p \
         -t ${task.cpus}
     """
 }
