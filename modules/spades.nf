@@ -97,6 +97,7 @@ process viralverify {
 
     output:
     path "${id}/*"
+    path "${id}/Prediction_results_fasta/*"
 
     script:
     """
