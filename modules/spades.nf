@@ -86,8 +86,10 @@ process viralverify {
     publishDir "${params.outdir}/viralverify" , mode: 'copy' ,
         pattern: "${id}/*"
 
-    publishDir "${params.outdir}/verified_plasmids" , mode: 'copy' ,
-        pattern: "${id}.fa"
+    publishDir "${params.outdir}" , mode: 'copy' ,
+        saveAs: { filename ->
+            if (filename == "${id}/Prediction_results_fasta/${id}_plasmid.fasta") "verified_plasmids/${id}.fa"
+        }
 
     input:
     tuple val(id), path(scaffolds)
