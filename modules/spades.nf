@@ -96,7 +96,6 @@ process viralverify {
     path(viralverify_db)
 
     output:
-    path "${id}.fa"
     path "${id}/*"
 
     script:
