@@ -41,6 +41,7 @@ after the pipeline has finished.
 ### Main outputs
 - `scaffolds`: scaffolds for each input samples;
 - `stats_scaffolds.tsv`: scaffold statistics;
+- `verified_plasmids`: verified plasmids (if `--run_plasmidspades` is set).
 
 ### Secondary outputs
 
@@ -48,8 +49,12 @@ after the pipeline has finished.
   quality and length for each input sample;
 - `clean_reads_stats`: same as above, but for the reads after the quality
   control;
+- `clean_reads`: clean reads (if `--save_clean` is set);
 - `qc`: statistics about the adapter trimming and the contaminant filtering;
-- `spades`: Spades output for each input sample;
+- `spades`: SPAdes output for each input sample (if `--save_spades_output` is
+  set);
+- `scaffolds_plasmids`: candidate plasmids (if `--run_plasmidspades` is set);
+- `viralverify`: viralVerify output (if `--run_plasmidspades` is set);
 
 
 ## System requirements
