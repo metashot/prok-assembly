@@ -4,6 +4,7 @@ process spades {
     tag "${id}"
 
     publishDir "${params.outdir}/spades" , mode: 'copy' ,
+        enabled: params.save_spades_output ,
         pattern: "${id}/*"
 
     publishDir "${params.outdir}/scaffolds" , mode: 'copy' ,
@@ -36,6 +37,7 @@ process plasmidspades {
     tag "${id}"
 
     publishDir "${params.outdir}/plasmidspades" , mode: 'copy' ,
+        enabled: params.save_spades_output ,
         pattern: "${id}/*"
 
     publishDir "${params.outdir}/scaffolds_plasmids" , mode: 'copy' ,
